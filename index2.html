@@ -1,0 +1,464 @@
+<!-- Сайт розроблено студенткою Анастасією Юковою, група ФЕМП 3-з, факультет економіки, менеджменту і права -->
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Salon Bellezza — Салон краси | Анастасія Юкова (ФЕМП 3-з)</title>
+
+  <style>
+    :root{
+      --bg: #fff8fb;
+      --card: #fff;
+      --accent: #ff6fa3;
+      --accent-2: #ff3385;
+      --muted: #6b6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 14px;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Header */
+    header{
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:60px;height:60px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow);
+    }
+    .logo svg{width:34px;height:34px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12))}
+    h1{font-size:18px;margin:0}
+    .sub{font-size:13px;color:var(--muted)}
+
+    nav{display:flex;gap:8px}
+    nav button{
+      background:transparent;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--accent);
+    }
+    nav button.active{background:var(--card);box-shadow:var(--shadow)}
+
+    main{flex:1;max-width:1100px;margin:0 auto;padding:18px;width:100%}
+
+    /* Sections */
+    .section{display:none;background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);margin-bottom:18px}
+    .section.active{display:block}
+
+    /* Grid / layout */
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr; } }
+
+    /* Services list */
+    .services{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .service{
+      background:linear-gradient(180deg,rgba(255,255,255,0.95),#fff);
+      padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.03);
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .service h3{margin:0;color:var(--accent)}
+    .service p{margin:0;color:var(--muted);font-size:14px}
+    .price{font-weight:900}
+    .service .btn{margin-top:auto;align-self:flex-end}
+
+    /* Booking panel */
+    .panel{background:linear-gradient(180deg,#fff,#fff8fd);padding:14px;border-radius:12px;box-shadow:var(--shadow)}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-weight:700;font-size:13px}
+    input[type="date"], select, input[type="time"]{
+      padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);font-size:14px;
+    }
+    .slots{display:flex;flex-wrap:wrap;gap:8px}
+    .slot{
+      padding:8px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:#fff;
+    }
+    .slot.selected{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:white;border:0}
+
+    .btn{
+      padding:10px 14px;border-radius:10px;border:0;background:var(--accent-2);color:white;font-weight:800;cursor:pointer;
+    }
+    .btn.ghost{background:transparent;border:2px solid rgba(255,51,133,0.12);color:var(--accent)}
+
+    /* Confirmation */
+    .confirm{
+      margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(90deg,#fff6fb,#fff);
+      border:1px solid rgba(255,108,150,0.08);
+    }
+
+    footer{padding:16px 18px;background:transparent;border-top:1px dashed rgba(0,0,0,0.04);display:flex;justify-content:space-between;align-items:center}
+    .footer-note{font-size:13px;color:var(--muted)}
+
+    /* small helpers */
+    .muted{color:var(--muted);font-size:13px}
+    .center{display:grid;place-items:center}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden>
+        <!-- simple flower-like icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2c1.1 0 2 .9 2 2 0 .4-.1.8-.3 1.1 1.5.6 2.8 1.9 3.4 3.4.3-.2.7-.3 1.1-.3 1.1 0 2 .9 2 2s-.9 2-2 2c-.4 0-.8-.1-1.1-.3-.6 1.5-1.9 2.8-3.4 3.4.2.3.3.7.3 1.1 0 1.1-.9 2-2 2s-2-.9-2-2c0-.4.1-.8.3-1.1-1.5-.6-2.8-1.9-3.4-3.4-.3.2-.7.3-1.1.3-1.1 0-2-.9-2-2s.9-2 2-2c.4 0 .8.1 1.1.3.6-1.5 1.9-2.8 3.4-3.4C10.1 4.8 10 4.4 10 4c0-1.1.9-2 2-2z" fill="#fff"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Salon Bellezza</h1>
+        <div class="sub">Салон краси — стиль, догляд, турбота</div>
+        <div class="muted">Виконавиця: <strong>Анастасія Юкова</strong> — <strong>ФЕМП 3-з</strong></div>
+      </div>
+    </div>
+
+    <nav aria-label="Навігація">
+      <button class="tab-btn active" data-tab="home">Головна</button>
+      <button class="tab-btn" data-tab="services">Послуги</button>
+      <button class="tab-btn" data-tab="booking">Бронювання</button>
+      <button class="tab-btn" data-tab="about">Про салон</button>
+      <button class="tab-btn" data-tab="contacts">Контакти</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section active">
+      <h2>Ласкаво просимо до Salon Bellezza</h2>
+      <p class="muted">Професійні послуги краси в комфортній атмосфері. Зручне онлайн-бронювання робить візит швидким і приємним.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div style="background:linear-gradient(180deg,#fff,#fff8fd);padding:12px;border-radius:12px;box-shadow:var(--shadow)">
+          <h3>Графік роботи</h3>
+          <p class="muted">Пн–Нд: <strong>09:00 — 20:00</strong></p>
+          <p class="muted">Всі бронювання підтверджуються миттєво у інтерфейсі. Дані не зберігаються на сервері.</p>
+        </div>
+        <div style="background:linear-gradient(180deg,#fff,#fff8fd);padding:12px;border-radius:12px;box-shadow:var(--shadow)">
+          <h3>Швидкий старт</h3>
+          <p class="muted">Перейдіть до <strong>Послуг</strong> або відкрийте вкладку <strong>Бронювання</strong>, щоб забронювати зручний час.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES / BOOKING LAYOUT -->
+    <section id="services" class="section">
+      <div class="grid">
+        <div>
+          <h2>Наші послуги</h2>
+          <p class="muted">Виберіть послугу, ознайомтесь з описом, тривалістю та орієнтовною вартістю.</p>
+
+          <div class="services" id="servicesList">
+            <!-- services rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Booking panel (summary + quick-book) -->
+        <aside class="panel">
+          <h3>Швидке бронювання</h3>
+
+          <div class="field">
+            <label for="serviceSelect">Послуга</label>
+            <select id="serviceSelect" aria-label="Вибрати послугу">
+              <!-- options populated by JS -->
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="dateInput">Дата</label>
+            <input type="date" id="dateInput" />
+          </div>
+
+          <div class="field">
+            <label>Час (доступні слоти)</label>
+            <div id="slotsWrap" class="slots">
+              <!-- time slots generated by JS -->
+            </div>
+          </div>
+
+          <button id="confirmBtn" class="btn" style="width:100%">Підтвердити бронювання</button>
+
+          <div id="bookingResult" class="confirm" style="display:none"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- BOOKING (full page with calendar-like choices) -->
+    <section id="booking" class="section">
+      <h2>Бронювання — детально</h2>
+      <p class="muted">Оберіть послугу, дату та час. Підтвердження з'явиться нижче.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
+        <div style="background:var(--card);padding:12px;border-radius:12px;box-shadow:var(--shadow)">
+          <div class="field">
+            <label for="svcFull">Послуга</label>
+            <select id="svcFull"></select>
+          </div>
+
+          <div class="field">
+            <label for="dateFull">Дата</label>
+            <input type="date" id="dateFull" />
+          </div>
+
+          <div class="field">
+            <label>Час</label>
+            <div id="slotsFull" class="slots"></div>
+          </div>
+
+          <button id="confirmFull" class="btn">Підтвердити бронювання</button>
+
+          <div id="resultFull" class="confirm" style="display:none"></div>
+        </div>
+
+        <aside class="panel">
+          <h3>Інформація</h3>
+          <p class="muted">Робочий день: <strong>09:00 — 20:00</strong></p>
+          <p class="muted">Слоти — погоджені інтервали (1 година). Останній слот починається о 19:00.</p>
+          <p class="muted">Після підтвердження ви отримаєте візуальне підтвердження в інтерфейсі (без надсилання e-mail).</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <h2>Про салон</h2>
+      <p class="muted">Salon Bellezza — сучасний салон краси з акцентом на якість обслуговування. Наші фахівці працюють з індивідуальним підходом та використовують перевірені продукти.</p>
+    </section>
+
+    <!-- CONTACTS -->
+    <section id="contacts" class="section">
+      <h2>Контакти</h2>
+      <p class="muted">Адреса: вул. Прикладна, 10, м. Київ (приблизно)</p>
+      <p class="muted">Телефон (приклад): +380 44 000 0000</p>
+      <p class="muted">Студентка / виконавиця: <strong>Анастасія Юкова</strong> — <strong>ФЕМП 3-з</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-note">Сайт розроблено: <strong>Анастасія Юкова</strong> — група <strong>ФЕМП 3-з</strong></div>
+    <div class="footer-note">Факультет економіки, менеджменту і права</div>
+  </footer>
+
+  <script>
+    /************** ДАНІ (всі дані — у JS) **************/
+    const SERVICES = [
+      { id: 1, title: "Стрижка жіноча", durationMin: 60, price: 650, desc: "Індивідуальна стрижка та укладання."},
+      { id: 2, title: "Стрижка чоловіча", durationMin: 45, price: 350, desc: "Швидка та стильна стрижка."},
+      { id: 3, title: "Фарбування волосся", durationMin: 120, price: 2200, desc: "Мелірування або повне фарбування."},
+      { id: 4, title: "Манікюр (класичний)", durationMin: 60, price: 500, desc: "Манікюр, шліфування та покриття."},
+      { id: 5, title: "Педикюр", durationMin: 60, price: 700, desc: "Професійний педикюр та зволоження."},
+      { id: 6, title: "Макіяж вечірній", durationMin: 90, price: 1200, desc: "Вечірній або урочистий макіяж."},
+      { id: 7, title: "Ламінування вій", durationMin: 45, price: 800, desc: "Ефект підкреслених вій на тривалий час."},
+      { id: 8, title: "SPA-процедура для обличчя", durationMin: 75, price: 1400, desc: "Пілінг, маска та масаж обличчя."}
+    ];
+
+    // робочі години (створення слотів) — працюємо 09:00-20:00, слоти погоджені по годинах
+    const WORK_START = 9; // 9:00
+    const WORK_END = 20; // 20:00
+
+    // Елементи DOM
+    const servicesList = document.getElementById('servicesList');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const slotsWrap = document.getElementById('slotsWrap');
+    const dateInput = document.getElementById('dateInput');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const bookingResult = document.getElementById('bookingResult');
+
+    const svcFull = document.getElementById('svcFull');
+    const dateFull = document.getElementById('dateFull');
+    const slotsFull = document.getElementById('slotsFull');
+    const confirmFull = document.getElementById('confirmFull');
+    const resultFull = document.getElementById('resultFull');
+
+    // Мінімальна/поточна дата
+    function setMinDate(inputEl){
+      const today = new Date();
+      const y = today.getFullYear();
+      const m = String(today.getMonth()+1).padStart(2,'0');
+      const d = String(today.getDate()).padStart(2,'0');
+      inputEl.min = `${y}-${m}-${d}`;
+      inputEl.value = `${y}-${m}-${d}`;
+    }
+    setMinDate(dateInput);
+    setMinDate(dateFull);
+
+    // Рендер послуг
+    function renderServices(){
+      servicesList.innerHTML = '';
+      SERVICES.forEach(s => {
+        const card = document.createElement('article');
+        card.className = 'service';
+        card.innerHTML = `
+          <h3>${s.title}</h3>
+          <p class="muted">${s.desc}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px">
+            <div class="muted">Тривалість: <strong>${s.durationMin} хв</strong></div>
+            <div class="price">${s.price.toLocaleString('uk-UA')} ₴</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn choose-btn" data-id="${s.id}">Обрати</button>
+            <button class="btn ghost info-btn" data-id="${s.id}">Деталі</button>
+          </div>
+        `;
+        servicesList.appendChild(card);
+      });
+    }
+
+    // Заповнення селектів
+    function fillSelects(){
+      [serviceSelect, svcFull].forEach(sel => {
+        sel.innerHTML = '';
+        SERVICES.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = `${s.title} — ${s.price.toLocaleString('uk-UA')} ₴ (${s.durationMin} хв)`;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    // Генерація годинних слотів
+    function generateSlots(){
+      const slots = [];
+      for(let h = WORK_START; h < WORK_END; h++){
+        const hh = String(h).padStart(2,'0');
+        slots.push(`${hh}:00`);
+      }
+      return slots;
+    }
+    const ALL_SLOTS = generateSlots();
+
+    // Рендер слотів у контейнері
+    function renderSlots(container){
+      container.innerHTML = '';
+      ALL_SLOTS.forEach(time => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot';
+        btn.textContent = time;
+        btn.dataset.time = time;
+        container.appendChild(btn);
+      });
+      container.addEventListener('click', (e) => {
+        const btn = e.target.closest('button.slot');
+        if(!btn) return;
+        container.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+    }
+
+    // Підтвердження бронювання (формуємо об'єкт)
+    function makeConfirmation(serviceId, dateStr, timeStr){
+      const svc = SERVICES.find(s => s.id === Number(serviceId));
+      if(!svc) return null;
+      return {
+        title: svc.title,
+        date: dateStr,
+        time: timeStr,
+        duration: svc.durationMin,
+        price: svc.price
+      };
+    }
+
+    // Показ результату у блоці
+    function showResultBlock(targetEl, data){
+      if(!data){ targetEl.style.display = 'none'; return; }
+      targetEl.style.display = 'block';
+      targetEl.innerHTML = `
+        <strong>Бронювання підтверджено</strong>
+        <p class="muted" style="margin:8px 0">Послуга: <strong>${escapeHtml(data.title)}</strong></p>
+        <p class="muted">Дата: <strong>${escapeHtml(data.date)}</strong></p>
+        <p class="muted">Час: <strong>${escapeHtml(data.time)}</strong> (тривалість: ${data.duration} хв)</p>
+        <p style="margin-top:8px">Вартість: <strong>${data.price.toLocaleString('uk-UA')} ₴</strong></p>
+        <div style="margin-top:8px;color:var(--muted)">Це демонстраційне підтвердження. Дані не зберігаються на сервері.</div>
+      `;
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    // Ініціалізація
+    renderServices();
+    fillSelects();
+    renderSlots(slotsWrap);
+    renderSlots(slotsFull);
+
+    // Кнопка "Обрати" на картці послуги
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('button.choose-btn');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      // вибрати у швидкій панелі
+      serviceSelect.value = id;
+      svcFull.value = id;
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelector('.tab-btn[data-tab="services"]').classList.add('active');
+      document.getElementById('services').classList.add('active');
+      window.scrollTo({top: document.getElementById('services').offsetTop - 20, behavior:'smooth'});
+    });
+
+    // Кнопка "Деталі"
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('button.info-btn');
+      if(!btn) return;
+      const id = Number(btn.dataset.id);
+      const svc = SERVICES.find(s=>s.id===id);
+      if(!svc) return;
+      alert(`${svc.title}\n\nОпис: ${svc.desc}\nТривалість: ${svc.durationMin} хв\nЦіна: ${svc.price.toLocaleString('uk-UA')} ₴`);
+    });
+
+    // Швидке бронювання
+    confirmBtn.addEventListener('click', ()=>{
+      const svcId = serviceSelect.value;
+      const dateVal = dateInput.value;
+      const chosen = slotsWrap.querySelector('.slot.selected');
+      if(!dateVal){ alert('Оберіть дату.'); return; }
+      if(!chosen){ alert('Оберіть час зі списку слоту.'); return; }
+      const timeVal = chosen.dataset.time;
+      const conf = makeConfirmation(svcId, dateVal, timeVal);
+      showResultBlock(bookingResult, conf);
+      bookingResult.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // Повна форма бронювання
+    confirmFull.addEventListener('click', ()=>{
+      const svcId = svcFull.value;
+      const dateVal = dateFull.value;
+      const chosen = slotsFull.querySelector('.slot.selected');
+      if(!dateVal){ alert('Оберіть дату.'); return; }
+      if(!chosen){ alert('Оберіть час зі списку слоту.'); return; }
+      const timeVal = chosen.dataset.time;
+      const conf = makeConfirmation(svcId, dateVal, timeVal);
+      showResultBlock(resultFull, conf);
+      resultFull.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // Навігація вкладок
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', ()=> {
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const sec = document.getElementById(tab);
+        if(sec) sec.classList.add('active');
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
+    });
+
+    // Очищення виділення слоту при зміні дати
+    dateInput.addEventListener('change', ()=> slotsWrap.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected')));
+    dateFull.addEventListener('change', ()=> slotsFull.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected')));
+  </script>
+</body>
+</html>
